@@ -1,32 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// I use useState to pass the selected major and year to QuizScreen
+import {useState} from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import Card from "./components/Card"
-import Quiz from "./components/Quiz"
+import Home from './components/Home'
+import QuizScreen from "./components/QuizScreen"
+import MajorSelection from "./components/MajorSelection"
 import YearSelection from './components/YearSelection'
 function App() {
-  const [showYear, setShowYear] = useState(true);
+  
+  const [selectedMajor, setSelectedMajor] = useState(''); 
+  const [selectedYear, setSelectedYear] = useState(''); 
 
-  function handleShowYear() {
-    setShowYear(!showYear);
-  }
+
 
   return (
-    <div className='p-10'>
-      <h1 className='text-center mb-10 text-4xl font-mono text-cyan-500'>QUIZZER</h1>
-      {showYear ? 
-        <div className='flex justify-between flex-wrap'>
-          <Card title="Computer Science" onClick={handleShowYear}></Card>
-          <Card title="Cybersecurity" onClick={handleShowYear}></Card>
-          <Card title="Accounting" onClick={handleShowYear}></Card>
-          <Card title="Cybersecurity" onClick={handleShowYear}></Card>
-        </div>
-      :
-      <YearSelection></YearSelection>
-      }     
-    </div>
-  )
+    <Router> 
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/major" element={<MajorSelection setSelectedMajor={setSelectedMajor}/>} />
+        <Route path="/year" element={<YearSelection selectedMajor={selectedMajor} setSelectedYear={setSelectedYear}/>} />
+        <Route path="/quiz" element={<QuizScreen selectedMajor={selectedMajor} selectedYear={selectedYear}/>} />
+
+      </Routes>
+    </Router>
+  ); 
 }
 
 export default App;

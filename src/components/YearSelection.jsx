@@ -1,14 +1,26 @@
+import { Link } from "react-router-dom";
 import Card from "./Card"
+import {years} from "./data"
 
-export default function YearSelection() { 
+
+function YearSelection({setSelectedYear}) {
+
+    const handleSelectedYear = (year) => { 
+        setSelectedYear(year);
+    }
 
     return (
-        <div className='flex justify-between flex-wrap'>
-            <Card title="Freshman"></Card>
-            <Card title="Sophomore"></Card>
-            <Card title="Junior"></Card>
-            <Card title="Senior"></Card>
+        <div className='flex justify-between flex-wrap p-10'>
+            {years.map((year, index) => { 
+                return  (
+                    <Link to="/quiz" key={index}>
+                        <Card title={year} onClick={handleSelectedYear}></Card>
+                    </Link>
+                )
+                })}
         </div>
     );
 
 }
+
+export default YearSelection
